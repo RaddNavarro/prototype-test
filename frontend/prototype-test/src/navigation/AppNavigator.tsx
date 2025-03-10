@@ -52,7 +52,7 @@ const HomeScreenNavigator: React.FC<Props> = ({ navigation }) => {
             
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Rewards" component={Rewards} />
-            <Tab.Screen name="DLSociety" component={Home} options={{title: "", 
+            <Tab.Screen name="DLSociety" component={Home} options={{ title: "Home", 
                 tabBarItemStyle: { position: 'relative' },
                 tabBarIcon: ({ color, focused }) => (
                     <View style={styles.curvedLogo}>
@@ -64,16 +64,29 @@ const HomeScreenNavigator: React.FC<Props> = ({ navigation }) => {
                     </View>
                 ),
                 }}/>
-            <Tab.Screen name="Calendar" component={Calendar} />
-            <Tab.Screen name="Profile" component={Profile} options={{ headerLeft: () =>
-            <TouchableOpacity onPress={() => navigation.goBack() }>
-                <Text>Go Back</Text> 
-            </TouchableOpacity>
-                 }}/>
+            <Tab.Screen name="Calendar" component={Calendar} options={{  headerRight: () =>
+            <TouchableOpacity onPress={() => navigation.navigate('AnnouncementsNav') } style={{ paddingHorizontal: 20 }}>
+                <Ionicons name="notifications-outline" size={20} /> 
+            </TouchableOpacity> }} />
+            <Tab.Screen name="Profile" component={Profile} />
 
             {/* <Tab.Screen name="Announcements" component={Announcements} /> */}
         </Tab.Navigator>
     )
+}
+
+const AnnouncementNav: React.FC<Props> = ({ navigation }) => {
+
+  return(
+    <Stack.Navigator>
+    <Stack.Screen name="Announcements" component={Announcements} options={{ title: "Create An Announcement", headerTitleAlign: 'center', headerRight: () =>
+      <TouchableOpacity onPress={() => navigation.goBack() } style={{ paddingHorizontal: 10 }}>
+        <Ionicons name="cloud-upload" size={25} />  
+      </TouchableOpacity>
+     }} />
+  </Stack.Navigator>
+  )
+  
 }
 
   
@@ -84,7 +97,7 @@ const AppNavigator = () => {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="LogIn" component={LogIn} />
                 <Stack.Screen name="HomeScreenNavigator" component={HomeScreenNavigator} />
-                <Stack.Screen name="Announcements" component={Announcements} />
+                <Stack.Screen name="AnnouncementsNav" component={AnnouncementNav}/>
             </Stack.Navigator>
         </NavigationContainer>
     )
